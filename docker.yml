@@ -1,0 +1,24 @@
+---
+ - hosts: webserver
+   become: true
+   tasks:
+           - name: Add Docker GPG file
+             apt_key: url=https://download.docker.com/linux/ubuntu/gpg
+
+           - name: Add Docker APT repository
+             apt_repository:
+                     repo: deb https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable
+
+           - name: Install list of packages
+             apt:
+                     state: present
+                     update_cache: yes
+                     name:
+                             - apt-transport-https
+                             - ca-certificates
+                             - curl
+                             - software-properties-common
+                             - docker.io
+...
+
+
